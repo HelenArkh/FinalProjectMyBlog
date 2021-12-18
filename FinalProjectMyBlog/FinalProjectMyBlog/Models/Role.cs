@@ -8,8 +8,11 @@ namespace FinalProjectMyBlog.Models
 {
     public class Role : IdentityRole
     {
-        public string UserId { get; set; }
-        public string UserEmail { get; set; }
+        public List<User> Users { get; set; }
+        public Role()
+        {
+            Users = new List<User>();
+        }
     }
 }
 

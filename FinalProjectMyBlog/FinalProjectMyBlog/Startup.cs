@@ -62,17 +62,9 @@ namespace FinalProjectMyBlog
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Login");
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/AccountManager/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/AccountManager/Login");
                 });
-
-            services.AddAuthorization(opts => {
-                opts.AddPolicy("OnlyForAdministrator", policy => {
-                    policy.RequireClaim(ClaimTypes.Role, "Администратор");
-                });
-                opts.AddPolicy("OnlyForModerator", policy => {
-                    policy.RequireClaim(ClaimTypes.Role, "Модератор");
-                });
-            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
