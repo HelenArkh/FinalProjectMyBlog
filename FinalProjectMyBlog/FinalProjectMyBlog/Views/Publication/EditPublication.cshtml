@@ -1,0 +1,37 @@
+﻿@model FinalProjectMyBlog.ViewModels.Publications.PublicationEditViewModel;
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="block-reg background-white">
+    <h3 class="center">Редактирование публикации</h3>
+    <form class="frm" method="post" asp-controller="Publication" asp-action="UpdatePublication">
+        <div asp-validation-summary="ModelOnly"></div>        
+        <div>
+            <div class="mrgn">
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div>
+            <div class="mrgn">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div>
+            <div class="mrgn">
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="center">
+            <form asp-controller="Publication" asp-action="UpdatePublication" method="post">
+                <button type="submit" class="btn btn-sm btn-primary min-width-but">
+                    Сохранить
+                </button>
+            </form>
+        </div>
+    </form>
+</div>

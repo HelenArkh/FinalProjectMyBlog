@@ -1,0 +1,44 @@
+﻿@model FinalProjectMyBlog.ViewModels.Tags.TagViewModel;
+
+<div class="block-reg background-white">
+
+    <div class="lined-block" tagscontainer>
+        <label class="gray-text">Все теги</label>
+
+        <div class="tagsbox">
+            @if (Model.Tags.Count != 0)
+            {
+            @foreach (var tag in @Model.Tags)
+            {
+            <div class="datadiv">
+                <div>
+                    <label class="gray-text">Тег:</label>
+                    <label> @tag.TagName</label>
+                </div>
+                <div class="mrgn center-align">
+                    <form asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-primary min-width-but">
+                            Редактировать
+                        </button>
+                    </form>
+                    <form asp-controller="Tag" asp-action="DeleteTag" asp-route-id="@tag.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-primary min-width-but">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+            }
+            }
+            else
+            {
+            <div>
+                <label> Пока не добавлено ни одного тега.</label>
+            </div>
+            }
+        </div>
+        <form method="get" asp-controller="Tag" asp-action="CreateTag">
+            <input class="enter_submit" type="submit" value="Создать новый тег" />
+        </form>
+    </div>
+</div>

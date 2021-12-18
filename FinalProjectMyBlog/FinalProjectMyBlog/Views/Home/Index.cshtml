@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using FinalProjectMyBlog.Models;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
+
+@model FinalProjectMyBlog.ViewModels.Account.MainViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div>Hello @User.Identity!</div>
+}
+else
+{
+
+
+    <div class="row">
+        <div class="side">
+            <div class="center">
+                Добро пожаловать в блог! Регистрируйтесь всего за 2 минуты, делитесь мыслями, находите новых друзей.
+                И с наступающим Новым годом!
+            </div>
+            <div class="center-align">
+                <form method="get" asp-controller="Publication" asp-action="GetAllPublications">
+                    <input class="enter_submit" type="submit" value="Почитать публикации пользователей" />
+                </form>
+            </div>
+            <img class="main-img" src="http://pngimg.com/uploads/christmas_tree/christmas_tree_PNG71.png" />
+        </div>
+
+
+        <div class="main">
+            <partial name="Login" model="@Model.LoginView" />
+            <partial name="Register" model="@Model.RegisterView" />
+        </div>
+
+    </div>
+}

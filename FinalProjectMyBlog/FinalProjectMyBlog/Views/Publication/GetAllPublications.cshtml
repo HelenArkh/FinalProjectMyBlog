@@ -1,0 +1,43 @@
+﻿@model FinalProjectMyBlog.ViewModels.Publications.PublicationViewModel;
+
+<div class="block-reg background-white">
+
+            <div class="lined-block" publicationscontainer>
+                <label class="gray-text">Все публикации пользователей</label>
+
+                <div class="publicationsbox">
+                    @if (Model.Publications.Count != 0)
+                    {
+                        @foreach (var publication in @Model.Publications)
+                        {
+                    <div class="datadiv">
+                        <div>
+                            <label class="gray-text">Название:</label>
+                            <label> @publication.Title</label>
+                        </div>
+
+                        <div>
+                            <label class="gray-text">Текст публикации:</label>
+                            <label> @publication.Text</label>
+                        </div>
+
+                        <div>
+                            <label class="gray-text">Дата публикации:</label>
+                            <label> @publication.Date</label>
+                        </div>
+                        <div>
+                            <label class="gray-text">Пользователь:</label>
+                            <label> @publication.UserName</label>
+                        </div>
+                    </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <label> В блогах пока нет публикаций.</label>
+                        </div>
+                    }
+                </div>
+            </div>
+</div>
