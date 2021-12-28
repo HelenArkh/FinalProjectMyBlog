@@ -33,6 +33,9 @@ namespace FinalProjectMyBlog
             CreateMap<TagEditViewModel, Tag>();
             CreateMap<Tag, TagEditViewModel>();
 
+            CreateMap<UserEditViewModel, User>();
+            CreateMap<User, UserEditViewModel>();
+
             CreateMap<UserWithFriendExt, User>();
             CreateMap<User, UserWithFriendExt>();
         }
