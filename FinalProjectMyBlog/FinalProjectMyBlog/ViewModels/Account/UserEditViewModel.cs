@@ -10,7 +10,7 @@ namespace FinalProjectMyBlog.ViewModels.Account
     {
         [Required]
         [Display(Name = "Идентификатор пользователя")]
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         [DataType(DataType.Text)]
         [Display(Name = "Имя", Prompt = "Введите имя")]

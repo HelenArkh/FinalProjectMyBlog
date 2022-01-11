@@ -145,3 +145,9 @@ input[type="checkbox"].input-validation-error {
     width: 20%;
     max-width: max-content;
 }
+
+.heighttext {
+    display: inline-block;
+    padding: 15px 10px;
+    line-height: 140%;
+}

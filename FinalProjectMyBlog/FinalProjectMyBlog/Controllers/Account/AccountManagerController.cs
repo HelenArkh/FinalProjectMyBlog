@@ -145,7 +145,7 @@ namespace FinalProjectMyBlog.Controllers.Account
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(model.UserId);
+                var user = await _userManager.FindByIdAsync(model.Id);
 
                 user.Convert(model);
 
@@ -205,6 +205,17 @@ namespace FinalProjectMyBlog.Controllers.Account
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
             repository.DeleteFriend(result, friend);
+
+            return RedirectToAction("MyPage", "AccountManager");
+        }
+
+        [Route("DeleteUser")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var result = await _userManager.DeleteAsync(user);
 
             return RedirectToAction("MyPage", "AccountManager");
         }

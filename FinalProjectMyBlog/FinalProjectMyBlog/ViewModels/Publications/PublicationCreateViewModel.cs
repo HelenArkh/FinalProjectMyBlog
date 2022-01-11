@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProjectMyBlog.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace FinalProjectMyBlog.ViewModels.Publications
         [DataType(DataType.Text)]
         [Display(Name = "Текст", Prompt = "Введите текст публикации")]
         public string Text { get; set; }
+
+        public List<Tag> Tags { get; set; }
     }
 }

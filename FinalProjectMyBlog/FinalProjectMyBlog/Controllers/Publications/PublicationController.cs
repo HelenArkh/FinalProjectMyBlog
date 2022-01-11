@@ -31,9 +31,13 @@ namespace FinalProjectMyBlog.Controllers.Publications
 
         [Route("Create")]
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View("Create");
+            var model = new PublicationCreateViewModel();
+
+            model.Tags = await GetAllTag();
+
+            return View("Create", model);
         }
 
         [Route("Create")]
@@ -45,6 +49,8 @@ namespace FinalProjectMyBlog.Controllers.Publications
                 var currentuser = User;
 
                 var publication = new Publication();
+
+                //сюда нужно добавить сохранение тегов, выбранных чекбоксами
 
                 publication.Convert(model);
 
@@ -65,13 +71,15 @@ namespace FinalProjectMyBlog.Controllers.Publications
 
         [Route("EditPublication")]
         [HttpPost]
-        public IActionResult EditPublication(string id)
+        public async Task<IActionResult> EditPublication(string id)
         {
             var repository = _unitOfWork.GetRepository<Publication>() as PublicationsRepository;
 
             var result = repository.GetPublicationsById(id);
 
             var editmodel = _mapper.Map<PublicationEditViewModel>(result);
+
+            editmodel.Tags = await GetAllTag();
 
             return View("EditPublication", editmodel);
         }
@@ -126,6 +134,13 @@ namespace FinalProjectMyBlog.Controllers.Publications
             model.Publications = repository.GetAllPublications();
 
             return View("GetAllPublications", model);
+        }
+
+        private async Task<List<Tag>> GetAllTag()
+        {
+            var repository = _unitOfWork.GetRepository<Tag>() as TagsRepository;
+
+            return repository.GetAllTags();
         }
     }
 }

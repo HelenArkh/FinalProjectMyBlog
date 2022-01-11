@@ -15,7 +15,9 @@
     <header class="border-bottom header background-white">
         <div class="container">
             <div class="topnav">
-                <a asp-area="" asp-controller="Home" asp-action="Index">SocialNetwork</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index">TheBestBlog</a>
+                <a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a>
+                <a asp-area="" asp-controller="Tag" asp-action="AddTag">Теги</a>
                 <partial name="_LogoutPartial.cshtml" />
                 <partial name="_SearchLayoutPartial" />
             </div>
@@ -29,7 +31,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - AwesomeNetwork - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - TheBestBlog - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

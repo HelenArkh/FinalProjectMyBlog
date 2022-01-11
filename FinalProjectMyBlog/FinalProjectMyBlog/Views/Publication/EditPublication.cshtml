@@ -7,10 +7,31 @@
 <div class="block-reg background-white">
     <h3 class="center">Редактирование публикации</h3>
     <form class="frm" method="post" asp-controller="Publication" asp-action="UpdatePublication">
-        <div asp-validation-summary="ModelOnly"></div>        
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="lined-block" publicationscontainer>
+            <label class="gray-text">Теги</label>
+
+            <div class="publicationsbox">
+                @if (Model.Tags.Count != 0)
+                {
+                    @foreach (var tag in @Model.Tags)
+                    {
+                        <div class="mrgn" style="display:inline-block">
+                            <input type="checkbox"><label>@tag.TagName</label><br>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div>
+                        <label> Не добавлено ни одного тега.</label>
+                    </div>
+                }
+            </div>
+        </div>
         <div>
             <div class="mrgn">
-                <input asp-for="Id" class="form-control" />
+                <input asp-for="Id" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
         </div>
@@ -22,7 +43,7 @@
         </div>
         <div>
             <div class="mrgn">
-                <input asp-for="Text" class="form-control" />
+                <textarea asp-for="Text" class="form-control"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
         </div>

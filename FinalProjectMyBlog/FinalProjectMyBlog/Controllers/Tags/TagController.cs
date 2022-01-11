@@ -28,11 +28,9 @@ namespace FinalProjectMyBlog.Controllers.Comments
 
 
         [Route("AddTag")]
-        [HttpPost]
-        public IActionResult AddTag(string id)
+        [HttpGet]
+        public IActionResult AddTag()
         {
-            ViewBag.Id = id;
-
             var repository = _unitOfWork.GetRepository<Tag>() as TagsRepository;
 
             var model = new TagViewModel();

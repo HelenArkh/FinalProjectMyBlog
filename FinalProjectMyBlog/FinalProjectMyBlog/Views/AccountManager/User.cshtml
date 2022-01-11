@@ -114,7 +114,7 @@
                             <label class="gray-text">Дата публикации:</label>
                             <label> @publication.Date</label>
                         </div>
-                        <div class="mrgn center-align">
+                        <div class="mrgn center-align" >
                             <form asp-controller="Publication" asp-action="EditPublication" asp-route-id="@publication.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-primary min-width-but">
                                     Редактировать
@@ -123,11 +123,6 @@
                             <form asp-controller="Publication" asp-action="DeletePublication" asp-route-id="@publication.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-primary min-width-but">
                                     Удалить
-                                </button>
-                            </form>
-                            <form asp-controller="Tag" asp-action="AddTag" asp-route-id="@publication.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-primary min-width-but">
-                                    Добавить тег
                                 </button>
                             </form>
                             <form asp-controller="Comment" asp-action="CreateComment" asp-route-id="@publication.Id" method="post">
