@@ -16,8 +16,14 @@
         <div class="container">
             <div class="topnav">
                 <a asp-area="" asp-controller="Home" asp-action="Index">TheBestBlog</a>
-                <a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a>
-                <a asp-area="" asp-controller="Tag" asp-action="AddTag">Теги</a>
+                @if (User.IsInRole("Администратор"))
+                {
+                    <a asp-area="" asp-controller="Roles" asp-action="Index">Роли</a>
+                }
+                @if (User.IsInRole("Администратор")|| User.IsInRole("Модератор"))
+                {
+            <a asp-area="" asp-controller="Tag" asp-action="AddTag">Теги</a>
+                }                
                 <partial name="_LogoutPartial.cshtml" />
                 <partial name="_SearchLayoutPartial" />
             </div>
