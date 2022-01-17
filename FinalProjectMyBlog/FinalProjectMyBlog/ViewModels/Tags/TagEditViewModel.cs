@@ -12,6 +12,7 @@ namespace FinalProjectMyBlog.ViewModels.Tags
         [Display(Name = "Идентификатор тега")]
         public string Id { get; set; }
 
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         [DataType(DataType.Text)]
         [Display(Name = "Тег", Prompt = "Отредактируйте тег")]
         public string TagName { get; set; }

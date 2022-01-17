@@ -31,9 +31,13 @@ namespace FinalProjectMyBlog.Controllers.Comments
         [HttpPost]
         public IActionResult CreateComment(string id)
         {
-            ViewBag.Id = id;
+            //ViewBag.Id = id;
 
-            return View("CreateComment");
+            var model = new CommentCreateViewModel();
+
+            model.PublicationId = id;
+
+            return View("CreateComment", model);
         }
 
         [Route("SaveComment")]
@@ -59,7 +63,7 @@ namespace FinalProjectMyBlog.Controllers.Comments
             else
             {
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("Create", model);
+                return View("CreateComment", model);
             }
         }
 

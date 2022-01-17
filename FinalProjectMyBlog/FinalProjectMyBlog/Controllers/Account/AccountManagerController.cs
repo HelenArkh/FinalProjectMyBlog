@@ -73,6 +73,11 @@ namespace FinalProjectMyBlog.Controllers.Account
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
+            else
+            {
+                ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                return View("Login", model);
+            }
             return RedirectToAction("Index", "Home");
         }
 

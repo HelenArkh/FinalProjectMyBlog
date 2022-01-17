@@ -64,6 +64,7 @@ namespace FinalProjectMyBlog.Controllers.Publications
             }
             else
             {
+                model.Tags = await GetAllTag();
                 ModelState.AddModelError("", "Некорректные данные");
                 return View("Create", model);
             }
@@ -86,7 +87,7 @@ namespace FinalProjectMyBlog.Controllers.Publications
 
         [Route("UpdatePublication")]
         [HttpPost]
-        public IActionResult UpdatePublication(
+        public async Task<IActionResult> UpdatePublicationAsync(
             PublicationEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -104,8 +105,9 @@ namespace FinalProjectMyBlog.Controllers.Publications
             }
             else
             {
+                model.Tags = await GetAllTag();
                 ModelState.AddModelError("", "Некорректные данные");
-                return View("Edit", model);
+                return View("EditPublication", model);
             }
         }
 

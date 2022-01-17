@@ -12,6 +12,7 @@ namespace FinalProjectMyBlog.ViewModels.Comments
         [Display(Name = "Идентификатор публикации")]
         public string PublicationId { get; set; }
 
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         [DataType(DataType.Text)]
         [Display(Name = "Текст", Prompt = "Введите текст комментария")]
         public string Text { get; set; }

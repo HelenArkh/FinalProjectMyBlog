@@ -8,6 +8,7 @@ namespace FinalProjectMyBlog.ViewModels.Tags
 {
     public class TagCreateViewModel
     {
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         [DataType(DataType.Text)]
         [Display(Name = "Название", Prompt = "Введите название тега")]
         public string TagName { get; set; }

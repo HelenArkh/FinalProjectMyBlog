@@ -12,10 +12,12 @@ namespace FinalProjectMyBlog.ViewModels.Account
         [Display(Name = "Идентификатор пользователя")]
         public string Id { get; set; }
 
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         [DataType(DataType.Text)]
         [Display(Name = "Имя", Prompt = "Введите имя")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "Поле не может быть пустым")]
         [DataType(DataType.Text)]
         [Display(Name = "Фамилия", Prompt = "Введите фамилию")]
         public string LastName { get; set; }
