@@ -60,12 +60,15 @@ namespace FinalProjectMyBlog.Controllers.Publications
 
                 repository.AddPublication(user, publication);
 
-                    return RedirectToAction("MyPage", "AccountManager");
+                Program.Logger.Info($"Пользователь {user.Email} добавил статью {publication.Title}");
+
+                return RedirectToAction("MyPage", "AccountManager");
             }
             else
             {
                 model.Tags = await GetAllTag();
                 ModelState.AddModelError("", "Некорректные данные");
+                Program.Logger.Info($"Некорректные данные при добавлении пользователем статьи");
                 return View("Create", model);
             }
         }
@@ -101,12 +104,15 @@ namespace FinalProjectMyBlog.Controllers.Publications
                     new UpdatePublicationQuery(model.Title, model.Text)
                 );
 
+                Program.Logger.Info($"Пользовател отредактировал статью {publication.Id}");
+
                 return RedirectToAction("MyPage", "AccountManager");
             }
             else
             {
                 model.Tags = await GetAllTag();
                 ModelState.AddModelError("", "Некорректные данные");
+                Program.Logger.Info($"Некорректные данные при редактировании статьи");
                 return View("EditPublication", model);
             }
         }
@@ -119,7 +125,11 @@ namespace FinalProjectMyBlog.Controllers.Publications
 
             var publication = repository.GetPublicationsById(id);
 
+            string publicationLog = publication.Id;
+
             repository.DeletePublication(publication);
+
+            Program.Logger.Info($"Пользовател удалил статью {publicationLog}");
 
             return RedirectToAction("MyPage", "AccountManager");
 

@@ -6,14 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog.Web;
+using NLog;
 
 namespace FinalProjectMyBlog
 {
     public class Program
     {
+        public static NLog.Logger Logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+             
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            Logger.Debug("Запуск приложения");
+
+            CreateHostBuilder(args).Build().Run();           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -21,6 +27,12 @@ namespace FinalProjectMyBlog
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+            })
+                .UseNLog();  // Подключаем NLog
     }
 }

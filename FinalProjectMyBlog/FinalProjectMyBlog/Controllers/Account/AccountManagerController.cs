@@ -8,6 +8,8 @@ using FinalProjectMyBlog.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,25 +62,29 @@ namespace FinalProjectMyBlog.Controllers.Account
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
+                    {                      
+                        return Redirect(model.ReturnUrl);                       
                     }
                     else
                     {
-                        return RedirectToAction("MyPage", "AccountManager");
+                        Program.Logger.Info($"Пользователь {user.Email} вошел на свою страницу"); 
+                        return RedirectToAction("MyPage", "AccountManager");                       
                     }
                 }
                 else
                 {
+                    Program.Logger.Info($"Пользователь ввел неправильный логин {model.Email} или пароль {model.Password}");
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
             else
             {
+                Program.Logger.Info($"Пользователь ввел неправильный логин {model.Email} или пароль {model.Password}. Модель не валидна");
                 ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 return View("Login", model);
             }
-            return RedirectToAction("Index", "Home");
+            
+            return RedirectToAction("Index", "Home");           
         }
 
         [Route("Logout")]
@@ -87,6 +93,7 @@ namespace FinalProjectMyBlog.Controllers.Account
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            Program.Logger.Info($"Пользователь разлогинился");
             return RedirectToAction("Index", "Home");
         }
 
@@ -157,15 +164,18 @@ namespace FinalProjectMyBlog.Controllers.Account
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
+                    Program.Logger.Info($"Пользователь {user.Email} отредактировал свой профиль");
                     return RedirectToAction("MyPage", "AccountManager");
                 }
                 else
                 {
+                    Program.Logger.Info($"Что-то пошло не так при редактировании профиля пользователя {user.Email}");
                     return RedirectToAction("Edit", "AccountManager");
                 }
             }
             else
             {
+                Program.Logger.Info($"Пользователь {model.Email} ввел некорректные данные при редактировании профиля");
                 ModelState.AddModelError("", "Некорректные данные");
                 return View("Edit", model);
             }
@@ -193,6 +203,8 @@ namespace FinalProjectMyBlog.Controllers.Account
 
             repository.AddFriend(result, friend);
 
+            Program.Logger.Info($"Пользователь {result.Email} добавил в друзья {friend.Email}");
+
             return RedirectToAction("MyPage", "AccountManager");
 
         }
@@ -211,6 +223,8 @@ namespace FinalProjectMyBlog.Controllers.Account
 
             repository.DeleteFriend(result, friend);
 
+            Program.Logger.Info($"Пользователь {result.Email} удалил из друзей {friend.Email}");
+
             return RedirectToAction("MyPage", "AccountManager");
         }
 
@@ -220,7 +234,11 @@ namespace FinalProjectMyBlog.Controllers.Account
         {
             var user = await _userManager.FindByIdAsync(id);
 
+            string userLog = user.Email;
+
             var result = await _userManager.DeleteAsync(user);
+
+            Program.Logger.Info($"Пользователь {userLog} удален");
 
             return RedirectToAction("MyPage", "AccountManager");
         }
@@ -261,91 +279,7 @@ namespace FinalProjectMyBlog.Controllers.Account
             };
 
             return model;
-        }
-
-        //[Route("Chat")]
-        //[HttpPost]
-        //public async Task<IActionResult> Chat(string id)
-        //{
-            //var currentuser = User;
-
-            //var result = await _userManager.GetUserAsync(currentuser);
-            //var friend = await _userManager.FindByIdAsync(id);
-
-            //var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
-
-            //var mess = repository.GetMessages(result, friend);
-
-            //var model = new ChatViewModel()
-            //{
-            //    You = result,
-            //    ToWhom = friend,
-            //    History = mess.OrderBy(x => x.Id).ToList(),
-            //};
-            //return View("Chat", model);
-        //}
-
-        //[Route("NewMessage")]
-        //[HttpPost]
-        //public async Task<IActionResult> NewMessage(string id, ChatViewModel chat)
-        //{
-        //    var currentuser = User;
-
-        //    var result = await _userManager.GetUserAsync(currentuser);
-        //    var friend = await _userManager.FindByIdAsync(id);
-
-        //    var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
-
-        //    var item = new Message()
-        //    {
-        //        Sender = result,
-        //        Recipient = friend,
-        //        Text = chat.NewMessage.Text,
-        //    };
-        //    repository.Create(item);
-
-        //    var mess = repository.GetMessages(result, friend);
-
-        //    var model = new ChatViewModel()
-        //    {
-        //        You = result,
-        //        ToWhom = friend,
-        //        History = mess.OrderBy(x => x.Id).ToList(),
-        //    };
-        //    return View("Chat", model);
-        //}
-
-        //private async Task<ChatViewModel> GenerateChat(string id)
-        //{
-        //    var currentuser = User;
-
-        //    var result = await _userManager.GetUserAsync(currentuser);
-        //    var friend = await _userManager.FindByIdAsync(id);
-
-        //    var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
-
-        //    var mess = repository.GetMessages(result, friend);
-
-        //    var model = new ChatViewModel()
-        //    {
-        //        You = result,
-        //        ToWhom = friend,
-        //        History = mess.OrderBy(x => x.Id).ToList(),
-        //    };
-
-        //    return model;
-        //}
-
-        //[Route("Chat")]
-        //[HttpGet]
-        //public async Task<IActionResult> Chat()
-        //{
-
-        //    var id = Request.Query["id"];
-
-        //    var model = await GenerateChat(id);
-        //    return View("Chat", model);
-        //}
+        }        
 
         [Route("Generate")]
         [HttpGet]

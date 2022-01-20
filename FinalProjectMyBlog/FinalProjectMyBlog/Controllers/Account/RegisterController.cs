@@ -53,19 +53,21 @@ namespace FinalProjectMyBlog.Controllers.Account
                     await _userManager.AddToRoleAsync(user, "Пользователь");
                     await _signInManager.SignInAsync(user, false);
                     //await Authenticate(user);
+                    Program.Logger.Info($"Зарегистрирован новый пользователь {user.Email}");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
+                        Program.Logger.Info($"При регистрации пользователя найдены ошибки: {error.Description}");
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
             }
+            
+            Program.Logger.Info($"Ошибки в модели при регистрации пользователя");
             return View("RegisterPart2", model);
-        }
-
-        
+        }       
     }
 }

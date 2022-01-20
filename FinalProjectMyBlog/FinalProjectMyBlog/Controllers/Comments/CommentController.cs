@@ -58,11 +58,14 @@ namespace FinalProjectMyBlog.Controllers.Comments
 
                 repository.AddComment(user, comment);
 
+                Program.Logger.Info($"Пользователь {user.Email} добавил комментарий {comment.Text}");
+
                 return RedirectToAction("MyPage", "AccountManager");
             }
             else
             {
                 ModelState.AddModelError("", "Некорректные данные");
+                Program.Logger.Info($"Некорректные данные при добавлении пользователем комментария");
                 return View("CreateComment", model);
             }
         }
