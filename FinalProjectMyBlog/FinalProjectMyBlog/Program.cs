@@ -16,10 +16,21 @@ namespace FinalProjectMyBlog
         public static NLog.Logger Logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
              
         public static void Main(string[] args)
-        {
-            Logger.Debug("Запуск приложения");
-
-            CreateHostBuilder(args).Build().Run();           
+        {          
+            try
+            {
+                Logger.Debug("Запуск приложения");
+                CreateHostBuilder(args).Build().Run(); 
+            }
+            catch (Exception exception)
+            {
+                Logger.Error(exception, "Stop programm because of exception");                
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }                 
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
