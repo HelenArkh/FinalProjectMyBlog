@@ -19,6 +19,7 @@ namespace FinalProjectMyBlog.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         [Route("")]
         [Route("[controller]/[action]")]
         public IActionResult Index()
@@ -26,6 +27,7 @@ namespace FinalProjectMyBlog.Controllers
             return View(new MainViewModel());
         }
 
+        [HttpGet]
         [Route("[action]")]
         public IActionResult Privacy()
         {
